@@ -1,0 +1,11 @@
+<div class="title-row">
+  <div class="title-wrapper">
+    <mat-card-title>
+      {{title}}
+    </mat-card-title>
+    <mat-card-subtitle *ngIf="subtitle">
+      {{subtitle}}
+    </mat-card-subtitle>
+  </div>
+  <ng-content></ng-content>
+</div>

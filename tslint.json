@@ -56,14 +56,70 @@
     "nx-enforce-module-boundaries": [
       true,
       {
-        "enforceBuildableLibDependency": true,
         "allow": [],
         "depConstraints": [
           {
-            "sourceTag": "*",
-            "onlyDependOnLibsWithTags": ["*"]
+            "sourceTag": "app",
+            "onlyDependOnLibsWithTags": [
+              "type:shared",
+              "type:data-access",
+              "type:util"
+            ]
+          },
+          {
+            "sourceTag": "type:shared",
+            "onlyDependOnLibsWithTags": ["type:shared", "type:util"]
+          },
+          {
+            "sourceTag": "type:feature",
+            "onlyDependOnLibsWithTags": [
+              "type:data-access",
+              "type:shared",
+              "type:ui",
+              "type:util",
+              "type:ui-featured"
+            ]
+          },
+          {
+            "sourceTag": "type:ui-featured",
+            "onlyDependOnLibsWithTags": [
+              "type:data-access",
+              "type:shared",
+              "type:ui",
+              "type:util",
+              "type:ui-featured"
+            ]
+          },
+          {
+            "sourceTag": "type:data-access",
+            "onlyDependOnLibsWithTags": [
+              "type:data-access",
+              "type:shared",
+              "type:util"
+            ]
+          },
+          {
+            "sourceTag": "type:ui",
+            "onlyDependOnLibsWithTags": ["type:ui", "type:shared", "type:util"]
+          },
+          {
+            "sourceTag": "type:util",
+            "onlyDependOnLibsWithTags": [
+              "type:util",
+              "type:shared",
+              "type:util"
+            ]
+          },
+          {
+            "sourceTag": "scope:blog",
+            "onlyDependOnLibsWithTags": ["scope:blog", "scope:shared"]
+          },
+          {
+            "sourceTag": "scope:shared",
+            "onlyDependOnLibsWithTags": ["scope:shared"]
           }
-        ]
+        ],
+        "enforceBuildableLibDependency": true
       }
     ],
     "directive-selector": [true, "attribute", "app", "camelCase"],

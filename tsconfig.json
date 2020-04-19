@@ -14,10 +14,49 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
-      "@blog/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@blog/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@blog/feature/api/posts-api": [
+        "libs/feature/api/posts-api/src/index.ts"
+      ],
+      "@blog/feature/lazy/posts-ui": [
+        "libs/feature/lazy/posts-ui/src/index.ts"
+      ],
+      "@blog/feature/api/auth-api": ["libs/feature/api/auth-api/src/index.ts"],
+      "@blog/feature/lazy/auth-ui": ["libs/feature/lazy/auth-ui/src/index.ts"],
+      "@blog/blog/feature-shell": ["libs/blog/feature-shell/src/index.ts"],
+      "@blog/blog/feature-posts": ["libs/blog/feature-posts/src/index.ts"],
+      "@blog/shared/posts/data-access": [
+        "libs/shared/posts/data-access/src/index.ts"
+      ],
+      "@blog/blog/feature-auth": ["libs/blog/feature-auth/src/index.ts"],
+      "@blog/shared/auth/data-access": [
+        "libs/shared/auth/data-access/src/index.ts"
+      ],
+      "@blog/shared/data-access": ["libs/shared/data-access/src/index.ts"],
+      "@blog/shared/snackbar": ["libs/shared/snackbar/src/index.ts"],
+      "@blog/shared/error-mapper": ["libs/shared/error-mapper/src/index.ts"],
+      "@blog/data-access-error-handler": [
+        "libs/blog/data-access-error-handler/src/index.ts"
+      ],
+      "@blog/shared/ui/button": ["libs/shared/ui/button/src/index.ts"],
+      "@blog/shared/util/ng-subscribe": [
+        "libs/shared/util/ng-subscribe/src/index.ts"
+      ],
+      "@blog/shared/posts/ui": ["libs/shared/posts/ui/src/index.ts"],
+      "@blog/shared/ui/content-state": [
+        "libs/shared/ui/content-state/src/index.ts"
+      ],
+      "@blog/shared/ui/title-row": ["libs/shared/ui/title-row/src/index.ts"],
+      "@blog/shared/users/data-access": [
+        "libs/shared/users/data-access/src/index.ts"
+      ]
     }
+  },
+  "angularCompilerOptions": {
+    "preserveWhitespaces": false
   },
   "exclude": ["node_modules", "tmp"]
 }

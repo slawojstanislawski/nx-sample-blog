@@ -1,0 +1,25 @@
+:host {
+  &.success {
+    .snackbar-message {
+      color: limegreen;
+    }
+  }
+  &.failure {
+    .snackbar-message {
+      color: mediumvioletred;
+    }
+  }
+}
+
+.snackbar {
+  &-wrapper {
+    display: flex;
+  }
+  &-message {
+    flex: 1;
+  }
+  &-close {
+    align-self: flex-start;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,8 @@
+<mat-card>
+  <sh-ui-title-row [title]="'Create a new post'"
+                   [subtitle]="'Provide details of your new post'"
+  ></sh-ui-title-row>
+  <sh-posts-ui-post-edit-form [updating]="updating$ | async"
+                              (created)="createPost($event)"
+  ></sh-posts-ui-post-edit-form>
+</mat-card>

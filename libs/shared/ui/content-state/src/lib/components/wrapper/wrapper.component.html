@@ -1,0 +1,14 @@
+<ng-container *ngIf="!loading; else loadingIndicator">
+  <sh-ui-content-state-error *ngIf="error as errorMessage; else noError"
+                         [message]="customErrorMessage || errorMessage"
+  ></sh-ui-content-state-error>
+  <ng-template #noError>
+    <ng-content></ng-content>
+  </ng-template>
+</ng-container>
+
+<ng-template #loadingIndicator>
+  <sh-ui-content-state-loading [isSpinner]="loadingWithSpinner"
+                               [loadingMessage]="loadingMessage"
+  ></sh-ui-content-state-loading>
+</ng-template>

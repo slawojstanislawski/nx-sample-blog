@@ -1,0 +1,9 @@
+<div class="loading-component-wrapper">
+  <mat-spinner *ngIf="isSpinner"
+               [diameter]="spinnerDiameter"
+  ></mat-spinner>
+  <span *ngIf="!isSpinnerOnly">
+    {{loadingMessage}}
+  </span>
+</div>
+

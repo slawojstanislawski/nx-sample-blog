@@ -1,0 +1,31 @@
+<mat-toolbar color="primary">
+  <mat-icon (click)="toggleDrawer()"
+            aria-hidden="false"
+            aria-label="Menu icon">
+    menu
+  </mat-icon>
+</mat-toolbar>
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="over">
+    <nav>
+      <mat-nav-list>
+        <ng-container *ngIf="(authenticated$ | async); else notAuthenticated">
+          <a [routerLink]="['/posts']"
+             mat-list-item>
+            Posts
+          </a>
+        </ng-container>
+        <ng-template #notAuthenticated>
+          <a [routerLink]="['/auth/login']"
+             mat-list-item>
+            Login
+          </a>
+        </ng-template>
+      </mat-nav-list>
+    </nav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

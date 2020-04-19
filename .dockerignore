@@ -1,0 +1,12 @@
+.git
+.idea
+*Dockerfile*
+*docker-compose*
+node_modules
+tools
+.gitignore
+.editorconfig
+.prettierignore
+.prettierrc
+README.md
+dist

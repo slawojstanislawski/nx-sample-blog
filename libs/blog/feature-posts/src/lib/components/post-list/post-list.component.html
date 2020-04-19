@@ -1,0 +1,43 @@
+<mat-card>
+  <sh-ui-title-row [title]="'Your posts'"
+                   [subtitle]="'List of the posts authored by you'">
+    <a [routerLink]="['./new']"
+       mat-mini-fab
+       color="primary"
+       title="Create Post">+</a>
+  </sh-ui-title-row>
+  <mat-list role="list" *ngSubscribe="postDeleting$ as deleting">
+    <sh-ui-content-state-wrapper [error]="postsErrorList$ | async"
+                                 [loading]="postsLoading$ | async"
+                                 [loadingMessage]="'Loading Posts'">
+      <ng-container *ngSubscribe="posts$ as posts">
+        <ng-container *ngIf="posts?.length; else noPosts">
+          <mat-list-item *ngFor="let post of (posts$ | async)"
+                         class="mat-raised-button"
+                         [class.linkDisabled]="deleting">
+            <p>
+              <a [routerLink]="[post?.id]"
+                 mat-list-item
+                 class="post-link">
+                {{post?.title}}
+              </a>
+            </p>
+            <div class="m-left-auto">
+              <sh-ui-button-button *ngIf="!deleting; else spin"
+                                   (click)="onPostDelete(post?.id)"
+                                   aria-label="Delete post button">
+                <mat-icon>delete</mat-icon>
+              </sh-ui-button-button>
+              <ng-template #spin>
+                <sh-ui-content-state-loading [isSpinnerOnly]="true"></sh-ui-content-state-loading>
+              </ng-template>
+            </div>
+          </mat-list-item>
+        </ng-container>
+        <ng-template #noPosts>
+          <span>No posts found, click the plus button to create a post</span>
+        </ng-template>
+      </ng-container>
+    </sh-ui-content-state-wrapper>
+  </mat-list>
+</mat-card>

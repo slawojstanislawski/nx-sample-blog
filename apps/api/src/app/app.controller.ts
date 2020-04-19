@@ -1,15 +1,16 @@
-import { Controller, Get } from '@nestjs/common';
+import {Controller, Request, Post, UseGuards} from '@nestjs/common';
+import {StrategyTypes} from './auth/strategies/strategy-types';
+import {LoginResponse} from '@blog/shared/auth/data-access';
+import {AuthService} from './auth/auth.service';
+import {AuthGuard} from '@nestjs/passport';
 
-import { Message } from '@blog/api-interfaces';
-
-import { AppService } from './app.service';
-
-@Controller()
+@Controller('')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly authService: AuthService) {}
 
-  @Get('hello')
-  getData(): Message {
-    return this.appService.getData();
+  @UseGuards(AuthGuard(StrategyTypes.LOCAL))
+  @Post('login')
+  async login(@Request() req): Promise<LoginResponse> {
+    return this.authService.login(req.user);
   }
 }

@@ -1,0 +1,35 @@
+<mat-card *ngSubscribe="post$ as post">
+  <sh-ui-title-row [title]="'Post details'"
+                   [subtitle]="'Detailed view of your post'">
+    <button *ngIf="post"
+            (click)="onEdit()"
+            mat-mini-fab
+            color="primary"
+            title="Edit">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </sh-ui-title-row>
+  <sh-ui-content-state-wrapper [loading]="loading$ | async"
+                               [error]="error$ | async"
+                               [customErrorMessage]="'Oops! Failed to load the post, please try again'"
+                               [loadingMessage]="'Loading post details'">
+    <ng-container *ngIf="post; else noPost">
+      <ng-container *ngIf="editing; else postData">
+        <sh-posts-ui-post-edit-form [post]="post"
+                                    [buttonText]="'Save post edits'"
+                                    [updating]="updating$ | async"
+                                    [isEditing]="true"
+                                    (edited)="updatePost($event)"
+                                    (cancelled)="onCancel()"
+        ></sh-posts-ui-post-edit-form>
+      </ng-container>
+      <ng-template #postData>
+        <mat-card-title>{{post?.title}}</mat-card-title>
+        <mat-card-content>{{post?.content}} </mat-card-content>
+      </ng-template>
+    </ng-container>
+    <ng-template #noPost>
+      <p>No post found</p>
+    </ng-template>
+  </sh-ui-content-state-wrapper>
+</mat-card>

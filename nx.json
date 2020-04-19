@@ -10,27 +10,69 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
+  "projects": {
+    "api": {
+      "tags": ["app"]
+    },
+    "blog": {
+      "tags": ["app"]
+    },
+    "blog-e2e": {
+      "tags": ["app"],
+      "implicitDependencies": ["blog"]
+    },
+    "blog-feature-shell": {
+      "tags": ["scope:blog", "type:feature"]
+    },
+    "blog-feature-posts": {
+      "tags": ["scope:blog", "type:feature"]
+    },
+    "blog-feature-auth": {
+      "tags": ["scope:blog", "type:feature"]
+    },
+    "shared-posts-data-access": {
+      "tags": ["scope:shared", "type:data-access"]
+    },
+    "shared-auth-data-access": {
+      "tags": ["scope:shared", "type:data-access"]
+    },
+    "shared-data-access": {
+      "tags": ["scope:shared", "type:data-access"]
+    },
+    "shared-snackbar": {
+      "tags": ["scope:shared", "type:shared"]
+    },
+    "shared-error-mapper": {
+      "tags": ["scope:shared", "type:data-access"]
+    },
+    "blog-data-access-error-handler": {
+      "tags": ["scope:blog", "type:data-access"]
+    },
+    "shared-ui-button": {
+      "tags": ["scope:shared", "type:ui"]
+    },
+    "shared-util-ng-subscribe": {
+      "tags": ["scope:shared", "type:util"]
+    },
+    "shared-posts-ui": {
+      "tags": ["scope:shared", "type:ui-featured"]
+    },
+    "shared-ui-content-state": {
+      "tags": ["scope:shared", "type:ui"]
+    },
+    "shared-ui-title-row": {
+      "tags": ["scope:shared", "type:ui"]
+    },
+    "shared-users-data-access": {
+      "tags": ["scope:shared", "type:data-access"]
+    }
+  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
         "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
-    }
-  },
-  "projects": {
-    "blog": {
-      "tags": []
-    },
-    "blog-e2e": {
-      "tags": [],
-      "implicitDependencies": ["blog"]
-    },
-    "api": {
-      "tags": []
-    },
-    "api-interfaces": {
-      "tags": []
     }
   }
 }

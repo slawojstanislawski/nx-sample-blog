@@ -82,3 +82,9 @@ Run `nx dep-graph` to see a diagram of the dependencies of your projects.
 ## Further help
 
 Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
+
+## Running docker for local development
+
+Before you do `docker-compose up`, you should execute `docker run frontend npm install`
+so that the dependencies were installed and built under linux, not
+your operating system.

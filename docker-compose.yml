@@ -1,0 +1,47 @@
+version: "2.4"
+
+volumes:
+  mongo_data:
+
+services:
+  mongo:
+    image: mongo:4.2.5-bionic
+    container_name: blog_mongo
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+      - "./docker/mongo/:/docker-entrypoint-initdb.d"
+    env_file:
+      - .env
+
+  api:
+    build:
+      context: .
+      target: dev_api
+      dockerfile: ./Dockerfile
+    container_name: blog_dev_api
+    restart: always
+    ports:
+      - '3333:3333'
+      - '7777:7777'
+    volumes:
+       - .:/myapp/
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: .
+      target: dev_frontend
+      dockerfile: ./Dockerfile
+    container_name: blog_dev_frontend
+    restart: always
+    ports:
+      - '4200:4200'
+    volumes:
+      - .:/myapp/
+      - ./docker/frontend/dev/proxy.conf.json:/myapp/apps/blog/proxy.conf.json
+    depends_on:
+      - api

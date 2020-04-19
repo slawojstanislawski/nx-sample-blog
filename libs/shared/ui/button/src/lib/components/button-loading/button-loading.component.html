@@ -1,0 +1,8 @@
+<sh-ui-button-button [disabled]="loading"
+                     [raised]="true"
+                     [color]="color"
+                     (click)="onClick()">
+  <sh-ui-button-content [loading]="loading">
+    {{text}}
+  </sh-ui-button-content>
+</sh-ui-button-button>

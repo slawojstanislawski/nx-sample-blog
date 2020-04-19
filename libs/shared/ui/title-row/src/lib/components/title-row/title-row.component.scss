@@ -1,0 +1,17 @@
+.title-row {
+  display: flex;
+  flex-direction: row;
+
+  .title-wrapper {
+    margin-right: 30px;
+  }
+
+  // default styles for right-aligned CTA elements
+  &::ng-deep {
+    a,
+    button {
+      margin-left: auto;
+      align-self: center;
+    }
+  }
+}
