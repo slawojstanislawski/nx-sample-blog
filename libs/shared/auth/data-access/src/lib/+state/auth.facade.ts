@@ -27,4 +27,8 @@ export class AuthFacade {
   login(credentials: LoginCredentials): void {
     this.store.dispatch(AuthActions.login({credentials}));
   }
+
+  logout(): void {
+    this.store.dispatch(AuthActions.logout());
+  }
 }

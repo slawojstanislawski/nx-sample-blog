@@ -2,3 +2,9 @@ mat-form-field {
   width: 100%;
   max-width: 800px;
 }
+
+#button-row {
+  sh-ui-button-button-loading {
+    margin-right: 0.5rem;
+  }
+}

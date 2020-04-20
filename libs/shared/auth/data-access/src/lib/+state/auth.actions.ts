@@ -8,6 +8,8 @@ export const login = createAction(
   props<{credentials: LoginCredentials}>()
 );
 
+export const logout = createAction('[Auth] Logout');
+
 export const loginSuccess = createAction(
   '[Auth] Login Success',
   props<{token: string}>()

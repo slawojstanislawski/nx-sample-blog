@@ -73,7 +73,7 @@ export const deletePost = createAction(
 
 export const deletePostSuccess = createAction(
   '[Posts] Delete Post Success',
-  props<{id: string}>() // TODO: verify if it's the case
+  props<{id: string}>()
 );
 
 export const deletePostFailure = createAction(

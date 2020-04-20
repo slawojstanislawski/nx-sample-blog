@@ -18,12 +18,20 @@
           <a [routerLink]="['/posts']"
              mat-list-item>
             Posts
+            <mat-icon>list</mat-icon>
+          </a>
+          <a (click)="logout()"
+             mat-list-item
+             [routerLink]="['/auth/login']">
+            Logout
+            <mat-icon>power_settings_new</mat-icon>
           </a>
         </ng-container>
         <ng-template #notAuthenticated>
           <a [routerLink]="['/auth/login']"
              mat-list-item>
             Login
+            <mat-icon>account_circle</mat-icon>
           </a>
         </ng-template>
       </mat-nav-list>
