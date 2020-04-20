@@ -13,9 +13,9 @@ import {ButtonComponent} from './components/button/button.component';
     CommonModule,
     MatButtonModule,
     SharedUtilNgSubscribeModule,
-    SharedUiContentStateModule,
+    SharedUiContentStateModule
   ],
   declarations: [ContentComponent, ButtonComponent, ButtonLoadingComponent],
-  exports: [ContentComponent, ButtonComponent, ButtonLoadingComponent],
+  exports: [ContentComponent, ButtonComponent, ButtonLoadingComponent]
 })
 export class SharedUiButtonModule {}

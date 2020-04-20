@@ -1,5 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Update} from '@ngrx/entity';
 import {Observable} from 'rxjs';
 
 import {
@@ -39,10 +40,10 @@ export class PostsService {
     return this.httpClient.delete<string>(`${this.basePath}/${id}`);
   }
 
-  updatePost(data: {id: string; updates: Partial<IPost>}): Observable<IPost> {
+  updatePost(update: Update<IPost>): Observable<IPost> {
     return this.httpClient.put<IPost>(
-      `${this.basePath}/${data.id}`,
-      data.updates
+      `${this.basePath}/${update.id}`,
+      update.changes
     );
   }
 }

@@ -24,16 +24,16 @@ import {SharedPostsUiModule} from '@blog/shared/posts/ui';
       {
         path: '',
         pathMatch: 'full',
-        component: PostListComponent,
+        component: PostListComponent
       },
       {
         path: 'new',
-        component: PostCreateComponent,
+        component: PostCreateComponent
       },
       {
         path: ':id',
-        component: PostDetailsComponent,
-      },
+        component: PostDetailsComponent
+      }
     ]),
     SharedPostsDataAccessModule,
     MatCardModule,
@@ -45,8 +45,8 @@ import {SharedPostsUiModule} from '@blog/shared/posts/ui';
     SharedPostsUiModule,
     SharedUiContentStateModule,
     MatIconModule,
-    SharedUiTitleRowModule,
+    SharedUiTitleRowModule
   ],
-  declarations: [PostListComponent, PostDetailsComponent, PostCreateComponent],
+  declarations: [PostListComponent, PostDetailsComponent, PostCreateComponent]
 })
 export class BlogFeaturePostsModule {}

@@ -8,36 +8,36 @@ import {provideMockStore} from '@ngrx/store/testing';
 import {NxModule, DataPersistence} from '@nrwl/angular';
 import {hot} from '@nrwl/angular/testing';
 
-import {PostsEffects} from './posts.effects';
-import * as PostsActions from './posts.actions';
+import {AuthEffects} from './auth.effects';
+import * as AuthActions from './auth.actions';
 
-describe('PostsEffects', () => {
+describe('AuthEffects', () => {
   let actions: Observable<any>;
-  let effects: PostsEffects;
+  let effects: AuthEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NxModule.forRoot()],
       providers: [
-        PostsEffects,
+        AuthEffects,
         DataPersistence,
         provideMockActions(() => actions),
         provideMockStore()
       ]
     });
 
-    effects = TestBed.get(PostsEffects);
+    effects = TestBed.get(AuthEffects);
   });
 
-  describe('loadPosts$', () => {
+  describe('loadAuth$', () => {
     it('should work', () => {
-      actions = hot('-a-|', {a: PostsActions.loadPosts()});
+      actions = hot('-a-|', {a: AuthActions.loadAuth()});
 
       const expected = hot('-a-|', {
-        a: PostsActions.loadPostsSuccess({posts: []})
+        a: AuthActions.loadAuthSuccess({auth: []})
       });
 
-      expect(effects.loadPosts$).toBeObservable(expected);
+      expect(effects.loadAuth$).toBeObservable(expected);
     });
   });
 });

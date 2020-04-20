@@ -7,13 +7,13 @@ import {StoreModule} from '@ngrx/store';
 import {NxModule} from '@nrwl/angular';
 
 import {
-  AuthEffects,
-  AUTH_FEATURE_KEY,
-  reducer as authReducer,
   SharedAuthDataAccessModule,
-  syncTokenMetaReducerFactory,
   AuthTokenGetter,
   defaultAuthConfig,
+  syncTokenMetaReducerFactory,
+  AUTH_FEATURE_KEY,
+  reducer as authReducer,
+  AuthEffects
 } from '@blog/shared/auth/data-access';
 import {BlogDataAccessErrorHandlerModule} from '@blog/data-access-error-handler';
 import {SharedDataAccessModule} from '@blog/shared/data-access';
@@ -30,22 +30,22 @@ import {SharedSnackbarModule} from '@blog/shared/snackbar';
       ...defaultAuthConfig,
       redirectAfterLogin: true,
       redirectPath: '/auth/login',
-      syncTokenStorage: localStorage,
+      syncTokenStorage: localStorage
     }),
     StoreModule.forRoot(
       {
-        [AUTH_FEATURE_KEY]: authReducer,
+        [AUTH_FEATURE_KEY]: authReducer
       },
       {
         metaReducers: [
           syncTokenMetaReducerFactory({
-            storage: localStorage,
-          }),
+            storage: localStorage
+          })
         ],
         runtimeChecks: {
           strictActionImmutability: true,
-          strictStateImmutability: true,
-        },
+          strictStateImmutability: true
+        }
       }
     ),
     NxModule.forRoot(),
@@ -53,15 +53,15 @@ import {SharedSnackbarModule} from '@blog/shared/snackbar';
     JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
-        useFactory: (tokenGetter) => {
+        useFactory: tokenGetter => {
           return {tokenGetter};
         },
-        deps: [AuthTokenGetter],
-      },
+        deps: [AuthTokenGetter]
+      }
     }),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects])
   ],
-  exports: [HttpClientModule],
+  exports: [HttpClientModule]
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

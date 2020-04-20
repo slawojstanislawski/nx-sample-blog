@@ -7,6 +7,6 @@ import {TitleRowComponent} from './components/title-row/title-row.component';
 @NgModule({
   imports: [CommonModule, MatCardModule],
   exports: [TitleRowComponent],
-  declarations: [TitleRowComponent],
+  declarations: [TitleRowComponent]
 })
 export class SharedUiTitleRowModule {}

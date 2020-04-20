@@ -1,62 +1,58 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
-import {POSTS_FEATURE_KEY, PostsState} from './posts.reducer';
+import {
+  POSTS_FEATURE_KEY,
+  State,
+  PostsPartialState,
+  postsAdapter
+} from './posts.reducer';
+import {IPost} from '@blog/shared/posts/data-access';
 
-// Lookup the 'Posts' feature state managed by NgRx
-const getPostsState = createFeatureSelector<PostsState>(POSTS_FEATURE_KEY);
-
-const getLoading = createSelector(
-  getPostsState,
-  (state: PostsState) => state.loading
+export const getPostsState = createFeatureSelector<PostsPartialState, State>(
+  POSTS_FEATURE_KEY
 );
 
-const getUpdating = createSelector(
+const {selectAll, selectEntities} = postsAdapter.getSelectors();
+
+export const getLoading = createSelector(
   getPostsState,
-  (state: PostsState) => state.updating
+  (state: State) => state.loading
 );
 
-const getDeleting = createSelector(
+export const getUpdating = createSelector(
   getPostsState,
-  (state: PostsState) => state.deleting
+  (state: State) => state.updating
 );
 
-const getErrorList = createSelector(
+export const getDeleting = createSelector(
   getPostsState,
-  (state: PostsState) => state.errorList
+  (state: State) => state.deleting
 );
 
-const getErrorSingleItem = createSelector(
+export const getErrorList = createSelector(
   getPostsState,
-  (state: PostsState) => state.errorSingleItem
+  (state: State) => state.errorList
 );
 
-const getAllPosts = createSelector(
+export const getErrorSingleItem = createSelector(
   getPostsState,
-  getLoading,
-  (state: PostsState, isLoading) => {
-    return isLoading ? [] : state.list;
-  }
+  (state: State) => state.errorSingleItem
 );
 
-const getSelectedId = createSelector(
-  getPostsState,
-  (state: PostsState) => state.selectedId
+export const getAllPosts = createSelector(getPostsState, (state: State) =>
+  selectAll(state)
 );
 
-const getSelectedPost = createSelector(
-  getAllPosts,
+export const getPostsEntities = createSelector(getPostsState, (state: State) =>
+  selectEntities(state)
+);
+
+export const getSelectedId = createSelector(
+  getPostsState,
+  (state: State) => state.selectedId
+);
+
+export const getSelected = createSelector<PostsPartialState, any, any, IPost>(
+  getPostsEntities,
   getSelectedId,
-  (posts, id) => {
-    const result = posts.find(it => it['id'] === id);
-    return result ? Object.assign({}, result) : undefined;
-  }
+  (entities, selectedId) => selectedId && entities[selectedId]
 );
-
-export const postsQuery = {
-  getLoading,
-  getUpdating,
-  getDeleting,
-  getErrorList,
-  getErrorSingleItem,
-  getAllPosts,
-  getSelectedPost
-};

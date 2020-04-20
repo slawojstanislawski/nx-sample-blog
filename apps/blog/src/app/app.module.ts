@@ -1,10 +1,10 @@
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BrowserModule} from '@angular/platform-browser';
-import { EffectsModule } from "@ngrx/effects";
 import {RouterModule} from '@angular/router';
+import {EffectsModule} from '@ngrx/effects';
 import {NgModule} from '@angular/core';
 
-import { AuthEffects } from "@blog/shared/auth/data-access";
+import {AuthEffects} from '@blog/shared/auth/data-access';
 import {CoreModule} from './core/core.module';
 import {AppComponent} from './app.component';
 

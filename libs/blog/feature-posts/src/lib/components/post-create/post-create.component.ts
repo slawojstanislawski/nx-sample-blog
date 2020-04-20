@@ -21,7 +21,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   errorSubscription: Subscription;
   successSubscription: Subscription;
   updating$: Observable<boolean>;
-  created$ = this.postsEffects.created$;
+  created$ = this.postsEffects.createPostSuccess$;
 
   constructor(
     private readonly router: Router,

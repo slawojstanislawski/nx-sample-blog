@@ -1,142 +1,99 @@
-import {PostsAction, PostsActionTypes} from './posts.actions';
+import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
+import {createReducer, on, Action} from '@ngrx/store';
+
+import {IPost} from '@blog/shared/posts/data-access';
 import {IApiError} from '@blog/shared/data-access';
-import {IPost} from '../shared/types';
+import * as PostsActions from './posts.actions';
 
 export const POSTS_FEATURE_KEY = 'posts';
 
-export interface PostsState {
-  list: IPost[];
+export interface State extends EntityState<IPost> {
   selectedId?: string | number;
   loading: boolean;
-  errorList?: IApiError;
-  errorSingleItem?: IApiError;
+  errorList: IApiError | null;
+  errorSingleItem: IApiError | null;
   updating: boolean;
   deleting: boolean;
 }
 
 export interface PostsPartialState {
-  readonly [POSTS_FEATURE_KEY]: PostsState;
+  readonly [POSTS_FEATURE_KEY]: State;
 }
 
-export const initialState: PostsState = {
-  list: [],
+export const postsAdapter: EntityAdapter<IPost> = createEntityAdapter<IPost>();
+
+export const initialState: State = postsAdapter.getInitialState({
   loading: false,
   updating: false,
-  deleting: false
-};
+  deleting: false,
+  errorList: null,
+  errorSingleItem: null
+});
 
-export function reducer(
-  state: PostsState = initialState,
-  action: PostsAction
-): PostsState {
-  switch (action.type) {
-    case PostsActionTypes.SetSelected: {
-      state = {
-        ...state,
-        selectedId: action.payload
-      };
-      break;
-    }
-    case PostsActionTypes.LoadPost:
-    case PostsActionTypes.LoadPosts: {
-      state = {
-        ...state,
-        list: [],
-        loading: true,
-        errorList: undefined
-      };
-      break;
-    }
-    case PostsActionTypes.LoadPostSuccess: {
-      state = {
-        ...state,
-        list: [action.payload],
-        loading: false
-      };
-      break;
-    }
-    case PostsActionTypes.LoadPostsSuccess: {
-      state = {
-        ...state,
-        list: action.payload,
-        loading: false
-      };
-      break;
-    }
-    case PostsActionTypes.LoadPostError:
-    case PostsActionTypes.LoadPostsError: {
-      state = {
-        ...state,
-        list: [],
-        loading: false,
-        errorList: action.payload
-      };
-      break;
-    }
-    case PostsActionTypes.UpdatePost:
-    case PostsActionTypes.CreatePost: {
-      state = {
-        ...state,
-        updating: true,
-        errorList: undefined
-      };
-      break;
-    }
-    case PostsActionTypes.DeletePost: {
-      state = {
-        ...state,
-        deleting: true,
-        errorSingleItem: undefined
-      };
-      break;
-    }
-    case PostsActionTypes.DeletePostError: {
-      state = {
-        ...state,
-        deleting: false,
-        errorSingleItem: action.payload
-      };
-      break;
-    }
-    case PostsActionTypes.CreatePostSuccess: {
-      state = {
-        ...state,
-        updating: false
-      };
-      break;
-    }
-    case PostsActionTypes.UpdatePostError:
-    case PostsActionTypes.CreatePostError: {
-      state = {
-        ...state,
-        updating: false,
-        errorList: action.payload
-      };
-      break;
-    }
-    case PostsActionTypes.DeletePostSuccess: {
-      let posts = [...state.list];
-      posts = posts.filter(p => p.id !== action.payload);
-      state = {
-        ...state,
-        deleting: false,
-        list: posts
-      };
-      break;
-    }
-    case PostsActionTypes.UpdatePostSuccess: {
-      const posts = [...state.list];
-      let post = posts.find(p => p.id === action.payload.id);
-      if (post) {
-        post = {...action.payload};
-        state = {
-          ...state,
-          updating: false,
-          list: posts
-        };
-      }
-      break;
-    }
-  }
-  return state;
+const postsReducer = createReducer(
+  initialState,
+  on(PostsActions.setSelected, (state, {id}) => ({...state, selectedId: id})),
+  on(PostsActions.loadPost, PostsActions.loadPosts, state => ({
+    ...state,
+    loading: true,
+    errorList: null
+  })),
+  on(PostsActions.loadPostSuccess, (state, {post}) =>
+    postsAdapter.addOne(post, {...state, loading: false})
+  ),
+  on(PostsActions.loadPostsSuccess, (state, {posts}) =>
+    postsAdapter.setAll(posts, {...state, loading: false})
+  ),
+  on(PostsActions.loadPostFailure, (state, {error}) => ({
+    ...state,
+    errorSingleItem: null,
+    loading: false
+  })),
+  on(PostsActions.loadPostsFailure, (state, {error}) => ({
+    ...state,
+    errorList: error,
+    loading: false
+  })),
+  on(PostsActions.updatePost, PostsActions.createPost, state => ({
+    ...state,
+    updating: true,
+    errorList: null,
+    errorSingleItem: null
+  })),
+  on(PostsActions.updatePostSuccess, (state, {post}) =>
+    postsAdapter.updateOne(
+      {id: post.id, changes: post},
+      {...state, updating: false}
+    )
+  ),
+  on(
+    PostsActions.updatePostFailure,
+    PostsActions.createPostFailure,
+    (state, {error}) => ({
+      ...state,
+      updating: false,
+      errorSingleItem: error
+    })
+  ),
+  on(PostsActions.createPostSuccess, state => ({
+    ...state,
+    updating: false
+  })),
+  on(PostsActions.deletePost, state => ({
+    ...state,
+    deleting: true,
+    errorSingleItem: null
+  })),
+  on(PostsActions.deletePostSuccess, (state, {id}) =>
+    postsAdapter.removeOne(id, {...state, deleting: false})
+  ),
+  on(PostsActions.deletePostFailure, (state, {error}) => ({
+    ...state,
+    deleting: false,
+    errorSingleItem: error
+  }))
+);
+
+export function reducer(state: State | undefined, action: Action) {
+  return postsReducer(state, action);
 }

@@ -2,7 +2,7 @@ import {MatSnackBarConfig} from '@angular/material/snack-bar';
 
 export enum SnackbarMessageType {
   SUCCESS = 'SUCCESS',
-  FAILURE = 'FAILURE',
+  FAILURE = 'FAILURE'
 }
 
 export interface ISnackbarData {

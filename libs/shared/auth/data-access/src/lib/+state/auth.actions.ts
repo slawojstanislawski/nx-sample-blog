@@ -1,34 +1,19 @@
-import {Action} from '@ngrx/store';
+import {createAction, props} from '@ngrx/store';
 
 import {IApiError} from '@blog/shared/data-access';
 import {LoginCredentials} from '../shared/types';
 
-export enum AuthActionTypes {
-  Login = '[Auth] Login',
-  LoginSuccess = '[Auth] Login Success',
-  LoginFailure = '[Auth] Login Failure'
-}
+export const login = createAction(
+  '[Auth] Login',
+  props<{credentials: LoginCredentials}>()
+);
 
-export class Login implements Action {
-  readonly type = AuthActionTypes.Login;
-  constructor(readonly payload: LoginCredentials) {}
-}
+export const loginSuccess = createAction(
+  '[Auth] Login Success',
+  props<{token: string}>()
+);
 
-export class LoginSuccess implements Action {
-  readonly type = AuthActionTypes.LoginSuccess;
-  constructor(readonly payload: string) {}
-}
-
-export class LoginFailure implements Action {
-  readonly type = AuthActionTypes.LoginFailure;
-
-  constructor(readonly payload: IApiError) {}
-}
-
-export type AuthAction = Login | LoginSuccess | LoginFailure;
-
-export const fromAuthActions = {
-  Login,
-  LoginSuccess,
-  LoginFailure
-};
+export const loginFailure = createAction(
+  '[Auth] Login Failure',
+  props<{error: IApiError}>()
+);

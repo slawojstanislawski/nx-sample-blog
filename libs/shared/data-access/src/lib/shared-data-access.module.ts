@@ -5,7 +5,7 @@ import {SharedDataAccessModuleConfig} from './tokens';
 import {ISharedDataAccessModuleConfig} from './types';
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule]
 })
 export class SharedDataAccessModule {
   static forRoot(
@@ -16,9 +16,9 @@ export class SharedDataAccessModule {
       providers: [
         {
           provide: SharedDataAccessModuleConfig,
-          useValue: config,
-        },
-      ],
+          useValue: config
+        }
+      ]
     };
   }
 }

@@ -1,32 +1,35 @@
-import {PostsState, initialState, reducer} from './posts.reducer';
-import {LoadPostsSuccess} from './posts.actions';
-import {IPost} from '../shared/types';
+import {PostsEntity} from './posts.models';
+import * as PostsActions from './posts.actions';
+import {State, initialState, reducer} from './posts.reducer';
 
 describe('Posts Reducer', () => {
-  const getPostsId = it => it['id'];
-  let createPosts;
-  beforeEach(() => {
-    createPosts = (_id: string, title = '', content = ''): IPost => ({
-      _id,
-      title: title || `title-${_id}`,
-      content: content || `content-${_id}`
-    });
-  });
-  describe('valid Posts actions ', () => {
-    it('should return set the list of known Posts', () => {
-      const postss = [createPosts('PRODUCT-AAA'), createPosts('PRODUCT-zzz')];
-      const action = new LoadPostsSuccess(postss);
-      const result: PostsState = reducer(initialState, action);
-      const selId: string = getPostsId(result.list[1]);
+  const createPostsEntity = (id: string, name = '') =>
+    ({
+      id,
+      name: name || `name-${id}`
+    } as PostsEntity);
 
-      expect(result.loading).toBe(false);
-      expect(result.list.length).toBe(2);
-      expect(selId).toBe('PRODUCT-zzz');
+  beforeEach(() => {});
+
+  describe('valid Posts actions', () => {
+    it('loadPostsSuccess should return set the list of known Posts', () => {
+      const posts = [
+        createPostsEntity('PRODUCT-AAA'),
+        createPostsEntity('PRODUCT-zzz')
+      ];
+      const action = PostsActions.loadPostsSuccess({posts});
+
+      const result: State = reducer(initialState, action);
+
+      expect(result.loaded).toBe(true);
+      expect(result.ids.length).toBe(2);
     });
   });
+
   describe('unknown action', () => {
     it('should return the previous state', () => {
       const action = {} as any;
+
       const result = reducer(initialState, action);
 
       expect(result).toBe(initialState);

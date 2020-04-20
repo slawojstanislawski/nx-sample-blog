@@ -4,9 +4,9 @@ import {StoreModule} from '@ngrx/store';
 import {NgModule} from '@angular/core';
 
 import {PostsService} from './services/posts.service';
-import {PostsFacade} from '../lib/+state/posts.facade';
-import {PostsEffects} from './+state/posts.effects';
 import * as fromPosts from './+state/posts.reducer';
+import {PostsEffects} from './+state/posts.effects';
+import {PostsFacade} from './+state/posts.facade';
 
 @NgModule({
   imports: [

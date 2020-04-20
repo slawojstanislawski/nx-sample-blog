@@ -12,7 +12,7 @@ import {ISharedSnackbarModuleConfig} from './types';
 @NgModule({
   imports: [CommonModule, MatSnackBarModule, MatIconModule],
   declarations: [SnackbarComponent],
-  entryComponents: [SnackbarComponent],
+  entryComponents: [SnackbarComponent]
 })
 export class SharedSnackbarModule {
   static createModuleWithProviders(
@@ -26,10 +26,10 @@ export class SharedSnackbarModule {
           provide: SharedSnackbarModuleConfig,
           useValue: {
             ...defaultSharedSnackbarModuleConfig,
-            ...config,
-          },
-        },
-      ],
+            ...config
+          }
+        }
+      ]
     };
   }
 

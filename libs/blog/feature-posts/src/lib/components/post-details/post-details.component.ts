@@ -2,6 +2,7 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Observable, Subscription} from 'rxjs';
+import {Update} from '@ngrx/entity';
 import {map} from 'rxjs/operators';
 
 import {IPost, PostsEffects, PostsFacade} from '@blog/shared/posts/data-access';
@@ -66,7 +67,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
     this.editing = false;
   }
 
-  updatePost(updates: Partial<IPost>) {
-    this.postsFacade.updatePost(this.postId, updates);
+  updatePost(updates: Update<IPost>): void {
+    this.postsFacade.updatePost(updates);
   }
 }

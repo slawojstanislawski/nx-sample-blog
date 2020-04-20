@@ -4,7 +4,7 @@ import {CommonModule} from '@angular/common';
 import {
   AUTH_FEATURE_KEY,
   defaultAuthConfig,
-  TOKEN_KEY,
+  TOKEN_KEY
 } from './shared/constants';
 import {AuthConfig, AuthTokenGetter} from './shared/injection-tokens';
 import {IsAuthenticatedGuard} from './guards/is-authenticated.guard';
@@ -14,6 +14,7 @@ import {IAuthConfig} from './shared/types';
 
 @NgModule({
   imports: [CommonModule],
+  providers: [AuthFacade]
 })
 export class SharedAuthDataAccessModule {
   static forRoot(
@@ -26,7 +27,7 @@ export class SharedAuthDataAccessModule {
         IsAuthenticatedGuard,
         {
           provide: AuthConfig,
-          useValue: config,
+          useValue: config
         },
         {
           provide: AuthTokenGetter,
@@ -42,10 +43,10 @@ export class SharedAuthDataAccessModule {
               return '';
             };
           },
-          deps: [AuthConfig],
-        },
+          deps: [AuthConfig]
+        }
       ],
-      ngModule: SharedAuthDataAccessModule,
+      ngModule: SharedAuthDataAccessModule
     };
   }
 }

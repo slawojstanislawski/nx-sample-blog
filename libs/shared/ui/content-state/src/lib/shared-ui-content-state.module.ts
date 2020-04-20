@@ -9,6 +9,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
   imports: [CommonModule, MatProgressSpinnerModule],
   declarations: [WrapperComponent, ErrorComponent, LoadingComponent],
-  exports: [WrapperComponent, ErrorComponent, LoadingComponent],
+  exports: [WrapperComponent, ErrorComponent, LoadingComponent]
 })
 export class SharedUiContentStateModule {}

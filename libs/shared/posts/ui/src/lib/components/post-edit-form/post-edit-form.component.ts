@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Update} from '@ngrx/entity';
 
 import {SnackbarService} from '@blog/shared/snackbar';
 import {IPost} from '@blog/shared/posts/data-access';
@@ -15,7 +16,7 @@ export class PostEditFormComponent implements OnInit {
   @Input() buttonText = 'Create Post';
   @Input() isEditing = false;
   @Output() created: EventEmitter<IPost>;
-  @Output() edited: EventEmitter<Partial<IPost>>;
+  @Output() edited: EventEmitter<Update<IPost>>;
   @Output() cancelled: EventEmitter<void>;
   formGroup: FormGroup;
 
@@ -24,7 +25,7 @@ export class PostEditFormComponent implements OnInit {
     private readonly snackbarService: SnackbarService
   ) {
     this.created = new EventEmitter<IPost>();
-    this.edited = new EventEmitter<Partial<IPost>>();
+    this.edited = new EventEmitter<Update<IPost>>();
     this.cancelled = new EventEmitter<void>();
   }
 
@@ -44,7 +45,7 @@ export class PostEditFormComponent implements OnInit {
       return;
     }
     if (this.isEditing) {
-      this.edited.emit(this.formGroup.value);
+      this.edited.emit({id: this.post.id, changes: this.formGroup.value});
     } else {
       this.created.emit(this.formGroup.value);
     }

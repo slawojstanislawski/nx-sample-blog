@@ -1,51 +1,45 @@
-import {select, Store} from '@ngrx/store';
+import {select, Store, Action} from '@ngrx/store';
 import {Injectable} from '@angular/core';
+import {Update} from '@ngrx/entity';
 
-import {
-  CreatePost,
-  DeletePost,
-  LoadPost,
-  LoadPosts,
-  SetSelected,
-  UpdatePost
-} from './posts.actions';
-import {PostsPartialState} from './posts.reducer';
-import {postsQuery} from './posts.selectors';
+import * as PostsSelectors from './posts.selectors';
+import * as PostsActions from './posts.actions';
+import * as fromPosts from './posts.reducer';
 import {IPost} from '../shared/types';
 
 @Injectable()
 export class PostsFacade {
-  errorList$ = this.store.pipe(select(postsQuery.getErrorList));
-  errorSingleItem$ = this.store.pipe(select(postsQuery.getErrorSingleItem));
-  loading$ = this.store.pipe(select(postsQuery.getLoading));
-  allPosts$ = this.store.pipe(select(postsQuery.getAllPosts));
-  updating$ = this.store.pipe(select(postsQuery.getUpdating));
-  deleting$ = this.store.pipe(select(postsQuery.getDeleting));
-  selectedPost$ = this.store.pipe(select(postsQuery.getSelectedPost));
+  errorList$ = this.store.pipe(select(PostsSelectors.getErrorList));
+  errorSingleItem$ = this.store.pipe(select(PostsSelectors.getErrorSingleItem));
+  loading$ = this.store.pipe(select(PostsSelectors.getLoading));
+  allPosts$ = this.store.pipe(select(PostsSelectors.getAllPosts));
+  updating$ = this.store.pipe(select(PostsSelectors.getUpdating));
+  deleting$ = this.store.pipe(select(PostsSelectors.getDeleting));
+  selectedPost$ = this.store.pipe(select(PostsSelectors.getSelected));
 
-  constructor(private store: Store<PostsPartialState>) {}
+  constructor(private store: Store<fromPosts.PostsPartialState>) {}
 
   setSelected(id: string): void {
-    this.store.dispatch(new SetSelected(id));
+    this.store.dispatch(PostsActions.setSelected({id}));
   }
 
   loadAll() {
-    this.store.dispatch(new LoadPosts());
+    this.store.dispatch(PostsActions.loadPosts());
   }
 
   loadPost(id: string) {
-    this.store.dispatch(new LoadPost(id));
+    this.store.dispatch(PostsActions.loadPost({id}));
   }
 
   createPost(post: IPost): void {
-    this.store.dispatch(new CreatePost(post));
+    this.store.dispatch(PostsActions.createPost({post}));
   }
 
-  updatePost(id: string, updates: Partial<IPost>) {
-    this.store.dispatch(new UpdatePost({id, updates}));
+  updatePost(update: Update<IPost>) {
+    this.store.dispatch(PostsActions.updatePost({update}));
   }
 
   deletePost(id: string) {
-    this.store.dispatch(new DeletePost(id));
+    this.store.dispatch(PostsActions.deletePost({id}));
   }
 }

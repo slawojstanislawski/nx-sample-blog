@@ -6,8 +6,12 @@
   </mat-icon>
 </mat-toolbar>
 
-<mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav mode="over">
+<mat-sidenav-container [hasBackdrop]="false"
+                       class="example-container">
+  <mat-sidenav [fixedInViewport]="true"
+               [fixedTopGap]="toolbarHeight$ | async"
+               #sidenav
+               mode="over">
     <nav>
       <mat-nav-list>
         <ng-container *ngIf="(authenticated$ | async); else notAuthenticated">

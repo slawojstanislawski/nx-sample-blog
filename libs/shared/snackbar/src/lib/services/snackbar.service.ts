@@ -4,7 +4,7 @@ import {Inject, Injectable} from '@angular/core';
 import {
   ISharedSnackbarModuleConfig,
   SnackbarConfig,
-  SnackbarMessageType,
+  SnackbarMessageType
 } from '../types';
 import {SnackbarComponent} from '../components/snackbar/snackbar.component';
 import {SharedSnackbarModuleConfig} from '../tokens';
@@ -25,9 +25,9 @@ export class SnackbarService {
     this.snackBar.openFromComponent(SnackbarComponent, {
       data: {
         type,
-        message,
+        message
       },
-      duration,
+      duration
     } as SnackbarConfig);
   }
 

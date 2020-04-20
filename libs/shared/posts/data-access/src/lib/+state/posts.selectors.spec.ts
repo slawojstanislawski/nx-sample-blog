@@ -1,56 +1,60 @@
-import {postsQuery} from './posts.selectors';
-import {IPost} from '../shared/types';
+import {PostsEntity} from './posts.models';
+import {State, postsAdapter, initialState} from './posts.reducer';
+import * as PostsSelectors from './posts.selectors';
 
 describe('Posts Selectors', () => {
   const ERROR_MSG = 'No Error Available';
   const getPostsId = it => it['id'];
+  const createPostsEntity = (id: string, name = '') =>
+    ({
+      id,
+      name: name || `name-${id}`
+    } as PostsEntity);
 
-  let storeState;
+  let state;
 
   beforeEach(() => {
-    const createPosts = (_id: string, title = '', content = ''): IPost => ({
-      _id,
-      title: title || `title-${_id}`,
-      content: content || `content-${_id}`
-    });
-    storeState = {
-      posts: {
-        list: [
-          createPosts('PRODUCT-AAA'),
-          createPosts('PRODUCT-BBB'),
-          createPosts('PRODUCT-CCC')
+    state = {
+      posts: postsAdapter.addAll(
+        [
+          createPostsEntity('PRODUCT-AAA'),
+          createPostsEntity('PRODUCT-BBB'),
+          createPostsEntity('PRODUCT-CCC')
         ],
-        selectedId: 'PRODUCT-BBB',
-        error: ERROR_MSG,
-        loaded: true
-      }
+        {
+          ...initialState,
+          selectedId: 'PRODUCT-BBB',
+          error: ERROR_MSG,
+          loaded: true
+        }
+      )
     };
   });
 
   describe('Posts Selectors', () => {
     it('getAllPosts() should return the list of Posts', () => {
-      const results = postsQuery.getAllPosts(storeState);
+      const results = PostsSelectors.getAllPosts(state);
       const selId = getPostsId(results[1]);
 
       expect(results.length).toBe(3);
       expect(selId).toBe('PRODUCT-BBB');
     });
 
-    it('getSelectedPosts() should return the selected Entity', () => {
-      const result = postsQuery.getSelectedPosts(storeState);
+    it('getSelected() should return the selected Entity', () => {
+      const result = PostsSelectors.getSelected(state);
       const selId = getPostsId(result);
 
       expect(selId).toBe('PRODUCT-BBB');
     });
 
-    it("getLoaded() should return the current 'loaded' status", () => {
-      const result = postsQuery.getLoaded(storeState);
+    it("getPostsLoaded() should return the current 'loaded' status", () => {
+      const result = PostsSelectors.getPostsLoaded(state);
 
       expect(result).toBe(true);
     });
 
-    it("getError() should return the current 'error' storeState", () => {
-      const result = postsQuery.getError(storeState);
+    it("getPostsError() should return the current 'error' state", () => {
+      const result = PostsSelectors.getPostsError(state);
 
       expect(result).toBe(ERROR_MSG);
     });

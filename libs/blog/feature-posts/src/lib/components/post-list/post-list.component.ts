@@ -9,7 +9,8 @@ import {
   IErrorToIndicatorMapper,
   IErrorToStringMapper
 } from '@blog/shared/error-mapper';
-import {IPost, PostsFacade} from '@blog/shared/posts/data-access';
+import {IPost, PostsEffects, PostsFacade} from '@blog/shared/posts/data-access';
+import {SnackbarService} from '@blog/shared/snackbar';
 
 @AutoUnsubscribe()
 @Component({
@@ -20,11 +21,14 @@ import {IPost, PostsFacade} from '@blog/shared/posts/data-access';
 export class PostListComponent implements OnInit, OnDestroy {
   posts$: Observable<IPost[]>;
   postsLoading$: Observable<boolean>;
-  postsErrorList$: Observable<string | undefined>;
-  postsErrorSingleItemSubscription$: Subscription;
   postDeleting$: Observable<boolean>;
+  postsErrorList$: Observable<string | undefined>;
+  postsErrorSingleItemSubscription: Subscription;
+  deletePostSuccessSubscription: Subscription;
 
   constructor(
+    private readonly snackbarService: SnackbarService,
+    private readonly postsEffects: PostsEffects,
     private readonly postsFacade: PostsFacade,
     @Inject(ErrorToMessageMapper)
     private readonly errToStrMapper: IErrorToStringMapper,
@@ -39,9 +43,14 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsErrorList$ = this.postsFacade.errorList$.pipe(
       map(this.errToStrMapper)
     );
-    this.postsErrorSingleItemSubscription$ = this.postsFacade.errorSingleItem$
+    this.postsErrorSingleItemSubscription = this.postsFacade.errorSingleItem$
       .pipe(map(this.errToSnackbarMapper))
       .subscribe();
+    this.deletePostSuccessSubscription = this.postsEffects.deletePostSuccess$.subscribe(
+      () => {
+        this.snackbarService.success('Post Deleted');
+      }
+    );
     this.postsFacade.loadAll();
   }
 

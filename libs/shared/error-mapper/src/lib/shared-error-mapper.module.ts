@@ -8,7 +8,7 @@ import {ErrorMapperModuleConfig} from './tokens';
 
 @NgModule({
   imports: [CommonModule],
-  providers: [ErrorMapperService],
+  providers: [ErrorMapperService]
 })
 export class SharedErrorMapperModule {
   private static createModuleWithProviders(
@@ -21,11 +21,11 @@ export class SharedErrorMapperModule {
           provide: ErrorMapperModuleConfig,
           useValue: {
             ...defaultErrorMappingModuleConfig,
-            ...config,
-          },
+            ...config
+          }
         },
-        ErrorMapperService,
-      ],
+        ErrorMapperService
+      ]
     };
   }
 

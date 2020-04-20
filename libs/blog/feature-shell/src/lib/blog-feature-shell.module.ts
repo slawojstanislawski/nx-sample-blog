@@ -9,7 +9,7 @@ import {NgModule} from '@angular/core';
 
 import {
   IsAuthenticatedGuard,
-  SharedAuthDataAccessModule,
+  SharedAuthDataAccessModule
 } from '@blog/shared/auth/data-access';
 import {HomeComponent} from './components/home/home.component';
 
@@ -25,32 +25,32 @@ import {HomeComponent} from './components/home/home.component';
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'posts',
+            redirectTo: 'posts'
           },
           {
             path: 'posts',
             canActivate: [IsAuthenticatedGuard],
             loadChildren: () =>
               import('@blog/blog/feature-posts').then(
-                (module) => module.BlogFeaturePostsModule
-              ),
+                module => module.BlogFeaturePostsModule
+              )
           },
           {
             path: 'auth',
             loadChildren: () =>
               import('@blog/blog/feature-auth').then(
-                (module) => module.BlogFeatureAuthModule
-              ),
-          },
-        ],
-      },
+                module => module.BlogFeatureAuthModule
+              )
+          }
+        ]
+      }
     ]),
     MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule,
+    MatListModule
   ],
-  declarations: [HomeComponent],
+  declarations: [HomeComponent]
 })
 export class BlogFeatureShellModule {}

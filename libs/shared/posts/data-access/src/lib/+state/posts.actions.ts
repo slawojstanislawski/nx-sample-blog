@@ -1,148 +1,82 @@
-import {IPost} from '../shared/types';
-import {Action} from '@ngrx/store';
+import {createAction, props} from '@ngrx/store';
 
+import {IPost} from '@blog/shared/posts/data-access';
 import {IApiError} from '@blog/shared/data-access';
+import {Update} from '@ngrx/entity/src/models';
 
-export enum PostsActionTypes {
-  SetSelected = '[Posts] Set Selected',
-  LoadPosts = '[Posts] Load Posts',
-  LoadPostsSuccess = '[Posts] Load Posts Success',
-  LoadPostsError = '[Posts] Load Posts Error',
-  LoadPost = '[Posts] Load Post',
-  LoadPostSuccess = '[Posts] Load Post Success',
-  LoadPostError = '[Posts] Load Post Error',
-  CreatePost = '[Posts] Create Post',
-  CreatePostSuccess = '[Posts] Create Post Success',
-  CreatePostError = '[Posts] Create Post Failure',
-  DeletePost = '[Posts] Delete Post',
-  DeletePostSuccess = '[Posts] Delete Post Success',
-  DeletePostError = '[Posts] Delete Post Error',
-  UpdatePost = '[Posts] Update Post',
-  UpdatePostSuccess = '[Posts] Update Success',
-  UpdatePostError = '[Posts] Update Error'
-}
+export const setSelected = createAction(
+  '[Posts] Set Selected',
+  props<{id: string}>()
+);
 
-export class SetSelected implements Action {
-  readonly type = PostsActionTypes.SetSelected;
-  constructor(public payload: string) {}
-}
+export const createPost = createAction(
+  '[Posts] Create Post',
+  props<{post: IPost}>()
+);
 
-export class LoadPost implements Action {
-  readonly type = PostsActionTypes.LoadPost;
-  constructor(public payload: string) {}
-}
+export const createPostSuccess = createAction(
+  '[Posts] Create Post Success',
+  props<{post: IPost}>()
+);
 
-export class LoadPostSuccess implements Action {
-  readonly type = PostsActionTypes.LoadPostSuccess;
-  constructor(public payload: IPost) {}
-}
+export const createPostFailure = createAction(
+  '[Posts] Create Post Failure',
+  props<{error: IApiError}>()
+);
 
-export class LoadPostError implements Action {
-  readonly type = PostsActionTypes.LoadPostError;
-  constructor(public payload: IApiError) {}
-}
+export const loadPosts = createAction('[Posts] Load Posts');
 
-export class LoadPosts implements Action {
-  readonly type = PostsActionTypes.LoadPosts;
-}
+export const loadPostsSuccess = createAction(
+  '[Posts] Load Posts Success',
+  props<{posts: IPost[]}>()
+);
 
-export class LoadPostsError implements Action {
-  readonly type = PostsActionTypes.LoadPostsError;
-  constructor(public payload: IApiError) {}
-}
+export const loadPostsFailure = createAction(
+  '[Posts] Load Posts Failure',
+  props<{error: IApiError}>()
+);
 
-export class LoadPostsSuccess implements Action {
-  readonly type = PostsActionTypes.LoadPostsSuccess;
-  constructor(public payload: IPost[]) {}
-}
+export const loadPost = createAction(
+  '[Posts] Load Post',
+  props<{id: string}>()
+);
 
-export class DeletePost implements Action {
-  readonly type = PostsActionTypes.DeletePost;
+export const loadPostSuccess = createAction(
+  '[Posts] Load Post Success',
+  props<{post: IPost}>()
+);
 
-  constructor(public payload: string) {}
-}
+export const loadPostFailure = createAction(
+  '[Posts] Load Post Failure',
+  props<{error: IApiError}>()
+);
 
-export class DeletePostSuccess implements Action {
-  readonly type = PostsActionTypes.DeletePostSuccess;
+export const updatePost = createAction(
+  '[Posts] Update Post',
+  props<{update: Update<IPost>}>()
+);
 
-  constructor(public payload: string) {}
-}
+export const updatePostSuccess = createAction(
+  '[Posts] Update Post Success',
+  props<{post: IPost}>()
+);
 
-export class DeletePostError implements Action {
-  readonly type = PostsActionTypes.DeletePostError;
+export const updatePostFailure = createAction(
+  '[Posts] Update Post Failure',
+  props<{error: IApiError}>()
+);
 
-  constructor(public payload: IApiError) {}
-}
+export const deletePost = createAction(
+  '[Posts] Delete Post',
+  props<{id: string}>()
+);
 
-export class UpdatePost implements Action {
-  readonly type = PostsActionTypes.UpdatePost;
+export const deletePostSuccess = createAction(
+  '[Posts] Delete Post Success',
+  props<{id: string}>() // TODO: verify if it's the case
+);
 
-  constructor(public payload: {id: string; updates: Partial<IPost>}) {}
-}
-
-export class UpdatePostSuccess implements Action {
-  readonly type = PostsActionTypes.UpdatePostSuccess;
-
-  constructor(public payload: IPost) {}
-}
-
-export class UpdatePostError implements Action {
-  readonly type = PostsActionTypes.UpdatePostError;
-
-  constructor(public payload: IApiError) {}
-}
-
-export class CreatePost implements Action {
-  readonly type = PostsActionTypes.CreatePost;
-
-  constructor(public payload: IPost) {}
-}
-
-export class CreatePostSuccess implements Action {
-  readonly type = PostsActionTypes.CreatePostSuccess;
-
-  constructor(public payload: IPost) {}
-}
-
-export class CreatePostError implements Action {
-  readonly type = PostsActionTypes.CreatePostError;
-
-  constructor(public payload: IApiError) {}
-}
-
-export type PostsAction =
-  | SetSelected
-  | LoadPosts
-  | LoadPostsSuccess
-  | LoadPostsError
-  | LoadPost
-  | LoadPostSuccess
-  | LoadPostError
-  | CreatePost
-  | CreatePostSuccess
-  | CreatePostError
-  | DeletePost
-  | DeletePostSuccess
-  | DeletePostError
-  | UpdatePost
-  | UpdatePostSuccess
-  | UpdatePostError;
-
-export const fromPostsActions = {
-  SetSelected,
-  LoadPosts,
-  LoadPostsSuccess,
-  LoadPostsError,
-  LoadPost,
-  LoadPostSuccess,
-  LoadPostError,
-  CreatePost,
-  CreatePostSuccess,
-  CreatePostError,
-  DeletePost,
-  DeletePostSuccess,
-  DeletePostError,
-  UpdatePost,
-  UpdatePostSuccess,
-  UpdatePostError
-};
+export const deletePostFailure = createAction(
+  '[Posts] Delete Post Failure',
+  props<{error: IApiError}>()
+);

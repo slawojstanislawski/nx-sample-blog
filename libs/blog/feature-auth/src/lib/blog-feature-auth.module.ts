@@ -16,7 +16,7 @@ import {SharedUiButtonModule} from '@blog/shared/ui/button';
   imports: [
     CommonModule,
     RouterModule.forChild([
-      {path: 'login', pathMatch: 'full', component: LoginComponent},
+      {path: 'login', pathMatch: 'full', component: LoginComponent}
     ]),
     MatCardModule,
     MatFormFieldModule,
@@ -25,8 +25,8 @@ import {SharedUiButtonModule} from '@blog/shared/ui/button';
     MatButtonModule,
     HttpClientModule,
     SharedUiButtonModule,
-    SharedUtilNgSubscribeModule,
+    SharedUtilNgSubscribeModule
   ],
-  declarations: [LoginComponent],
+  declarations: [LoginComponent]
 })
 export class BlogFeatureAuthModule {}

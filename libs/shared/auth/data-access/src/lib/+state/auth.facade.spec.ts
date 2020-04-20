@@ -7,26 +7,31 @@ import {StoreModule, Store} from '@ngrx/store';
 
 import {NxModule} from '@nrwl/angular';
 
-import {PostsEntity} from './posts.models';
-import {PostsEffects} from './posts.effects';
-import {PostsFacade} from './posts.facade';
+import {AuthEntity} from './auth.models';
+import {AuthEffects} from './auth.effects';
+import {AuthFacade} from './auth.facade';
 
-import * as PostsSelectors from './posts.selectors';
-import * as PostsActions from './posts.actions';
-import {POSTS_FEATURE_KEY, State, initialState, reducer} from './posts.reducer';
+import * as AuthSelectors from './auth.selectors';
+import * as AuthActions from './auth.actions';
+import {
+  AUTH_FEATURE_KEY,
+  AuthState,
+  initialState,
+  reducer
+} from './auth.reducer';
 
 interface TestSchema {
-  posts: State;
+  auth: AuthState;
 }
 
-describe('PostsFacade', () => {
-  let facade: PostsFacade;
+describe('AuthFacade', () => {
+  let facade: AuthFacade;
   let store: Store<TestSchema>;
-  const createPostsEntity = (id: string, name = '') =>
+  const createAuthEntity = (id: string, name = '') =>
     ({
       id,
       name: name || `name-${id}`
-    } as PostsEntity);
+    } as AuthEntity);
 
   beforeEach(() => {});
 
@@ -34,10 +39,10 @@ describe('PostsFacade', () => {
     beforeEach(() => {
       @NgModule({
         imports: [
-          StoreModule.forFeature(POSTS_FEATURE_KEY, reducer),
-          EffectsModule.forFeature([PostsEffects])
+          StoreModule.forFeature(AUTH_FEATURE_KEY, reducer),
+          EffectsModule.forFeature([AuthEffects])
         ],
-        providers: [PostsFacade]
+        providers: [AuthFacade]
       })
       class CustomFeatureModule {}
 
@@ -53,7 +58,7 @@ describe('PostsFacade', () => {
       TestBed.configureTestingModule({imports: [RootModule]});
 
       store = TestBed.get(Store);
-      facade = TestBed.get(PostsFacade);
+      facade = TestBed.get(AuthFacade);
     });
 
     /**
@@ -61,15 +66,15 @@ describe('PostsFacade', () => {
      */
     it('loadAll() should return empty list with loaded == true', async done => {
       try {
-        let list = await readFirst(facade.allPosts$);
+        let list = await readFirst(facade.allAuth$);
         let isLoaded = await readFirst(facade.loaded$);
 
         expect(list.length).toBe(0);
         expect(isLoaded).toBe(false);
 
-        facade.dispatch(PostsActions.loadPosts());
+        facade.dispatch(AuthActions.loadAuth());
 
-        list = await readFirst(facade.allPosts$);
+        list = await readFirst(facade.allAuth$);
         isLoaded = await readFirst(facade.loaded$);
 
         expect(list.length).toBe(0);
@@ -82,23 +87,23 @@ describe('PostsFacade', () => {
     });
 
     /**
-     * Use `loadPostsSuccess` to manually update list
+     * Use `loadAuthSuccess` to manually update list
      */
-    it('allPosts$ should return the loaded list; and loaded flag == true', async done => {
+    it('allAuth$ should return the loaded list; and loaded flag == true', async done => {
       try {
-        let list = await readFirst(facade.allPosts$);
+        let list = await readFirst(facade.allAuth$);
         let isLoaded = await readFirst(facade.loaded$);
 
         expect(list.length).toBe(0);
         expect(isLoaded).toBe(false);
 
         facade.dispatch(
-          PostsActions.loadPostsSuccess({
-            posts: [createPostsEntity('AAA'), createPostsEntity('BBB')]
+          AuthActions.loadAuthSuccess({
+            auth: [createAuthEntity('AAA'), createAuthEntity('BBB')]
           })
         );
 
-        list = await readFirst(facade.allPosts$);
+        list = await readFirst(facade.allAuth$);
         isLoaded = await readFirst(facade.loaded$);
 
         expect(list.length).toBe(2);
