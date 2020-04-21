@@ -14,7 +14,7 @@ services:
       - mongo_data:/data/db
       - "./docker/mongo/:/docker-entrypoint-initdb.d"
     env_file:
-      - .env
+      - ./docker/.env
 
   api:
     build:
@@ -28,6 +28,7 @@ services:
       - '7777:7777'
     volumes:
        - .:/myapp/
+       - ./docker/.env:/myapp/.env
     depends_on:
       - mongo
 
