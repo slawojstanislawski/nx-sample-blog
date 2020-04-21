@@ -72,12 +72,14 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.901.0",
-    "@angular/cli": "9.1.0",
+    "@angular/cli": "^9.1.1",
     "@angular/compiler-cli": "^9.1.0",
     "@angular/language-service": "^9.1.0",
     "@nestjs/schematics": "^6.7.0",
     "@nestjs/testing": "^6.8.3",
     "@ngneat/spectator": "^5.5.0",
+    "@ngrx/schematics": "9.0.0",
+    "@ngrx/store-devtools": "9.0.0",
     "@nrwl/cypress": "9.2.2",
     "@nrwl/jest": "9.2.2",
     "@nrwl/nest": "9.2.2",
@@ -102,8 +104,6 @@
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
     "typescript": "~3.8.3",
-    "webpack-bundle-analyzer": "^3.7.0",
-    "@ngrx/schematics": "9.0.0",
-    "@ngrx/store-devtools": "9.0.0"
+    "webpack-bundle-analyzer": "^3.7.0"
   }
 }

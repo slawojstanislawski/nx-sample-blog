@@ -1,19 +1,18 @@
 # some things would need to be built with build tools later,
 # hence the larger 'base' image is used for 'base'
-FROM node:12.16.2 as base
-ENV NODE_ENV=production
+FROM node:12.16.2 as prebase
 ENV TINI_VERSION v0.18.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
-RUN chown node:node /tini
 # tini PID1 process' binary setup completed
-RUN mkdir myapp && chown node:node myapp
-USER node
+ENV NODE_ENV=production
+RUN mkdir myapp
 WORKDIR /myapp
-COPY package*.json ./
+COPY ./package*.json ./
 RUN npm config list
-RUN npm ci
-ENV PATH /myapp/node_modules/.bin:$PATH
+
+FROM prebase as base
+RUN npm ci && npm cache clean --force
 ENTRYPOINT ["/tini", "--"]
 
 # 'stage' image is the only one that has both prod and dev npm dependencies.
@@ -31,8 +30,7 @@ RUN apt-get update \
 # this node slim image doesn't have 'ps' command and one gets
 # 'Error: spawn ps ENOENT' message on live-reload refresh.
 # Adding the 'ps' package solves the problem
-RUN mkdir myapp && chown node:node myapp
-USER node
+RUN mkdir myapp
 WORKDIR /myapp
 ENV PATH /myapp/node_modules/.bin:$PATH
 COPY --from=stage /tini /tini

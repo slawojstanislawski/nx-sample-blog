@@ -83,8 +83,29 @@ Run `nx dep-graph` to see a diagram of the dependencies of your projects.
 
 Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
 
+## Local development
+
+You need mongo installed on your host, or you can run mongo in Docker.
+TODO:
+add instructions on how to setup the env file
+add instructions that a 'blog' database is necessary.
+
 ## Running docker for local development
 
-Before you do `docker-compose up`, you should execute `docker run frontend npm install`
-so that the dependencies were installed and built under linux, not
-your operating system.
+Execute these commands:
+
+`docker-compose -f tools/container-npm/docker-compose.yml run -e NODE_ENV=development frontend npm install`
+
+the above will build a bare node image and install and build dependencies from the Linux container's context - 
+your node_modules directory on the host will hold Linux-compatible files which will be mounted during 
+local development when starting the services later.
+
+`docker ps --filter name=container-npm_frontend* -aq | xargs docker stop | xargs docker rm`
+
+`docker rmi container-npm_frontend`
+
+those two above are for cleanup, and finally:
+
+`docker-compose up -d`
+
+this starts the services - frontend, api, mongo.
