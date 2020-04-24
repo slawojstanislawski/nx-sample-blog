@@ -60,6 +60,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
     const credentials: LoginCredentials = this.formGroup.value;
+    credentials.password.toLowerCase();
+    credentials.username.toLowerCase();
     this.authFacade.login(credentials);
   }
 }

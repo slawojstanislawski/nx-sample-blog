@@ -17,8 +17,8 @@ import {
 } from '@blog/shared/auth/data-access';
 import {BlogDataAccessErrorHandlerModule} from '@blog/data-access-error-handler';
 import {SharedDataAccessModule} from '@blog/shared/data-access';
-import {environment} from '../../environments/environment';
 import {SharedSnackbarModule} from '@blog/shared/snackbar';
+import {environment} from '../../environments/environment';
 
 @NgModule({
   imports: [

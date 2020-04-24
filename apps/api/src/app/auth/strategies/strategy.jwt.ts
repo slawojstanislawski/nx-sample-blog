@@ -6,7 +6,7 @@ import {
   IAuthenticatedUserData,
   IJwtTokenPayload
 } from '@blog/shared/auth/data-access';
-import {ConfigService} from '../../config/config.service';
+import {ConfigService} from '@blog/shared/config';
 
 @Injectable()
 export class AuthStrategyJwt extends PassportStrategy(PassportStrategyJwt) {

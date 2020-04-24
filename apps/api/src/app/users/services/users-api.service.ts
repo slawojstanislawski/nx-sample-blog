@@ -3,7 +3,7 @@ import {Injectable} from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import {Model} from 'mongoose';
 
-import {IUserDocument} from '@blog/shared/users/data-access';
+import {IUser, IUserDocument} from '@blog/shared/users/data-access';
 
 @Injectable()
 export class UsersApiService {
@@ -17,5 +17,11 @@ export class UsersApiService {
 
   async findOne(username: string): Promise<IUserDocument | null> {
     return await this.userModel.findOne({username}).exec();
+  }
+
+  async create(user: IUser): Promise<IUserDocument> {
+    user.username.toLowerCase();
+    user.password.toLowerCase();
+    return await this.userModel.create(user);
   }
 }
