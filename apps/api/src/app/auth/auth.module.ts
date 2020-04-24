@@ -2,21 +2,20 @@ import {PassportModule} from '@nestjs/passport';
 import {JwtModule} from '@nestjs/jwt';
 import {Module} from '@nestjs/common';
 
+import {ConfigService, SharedConfigModule} from '@blog/shared/config';
 import {AuthStrategyLocal} from './strategies/strategy.local';
 import {AuthStrategyJwt} from './strategies/strategy.jwt';
 import {StrategyTypes} from './strategies/strategy-types';
-import {ConfigService} from '../config/config.service';
-import {ConfigModule} from '../config/config.module';
 import {UsersModule} from '../users/users.module';
 import {AuthService} from './auth.service';
 
 @Module({
   imports: [
-    ConfigModule,
+    SharedConfigModule,
     UsersModule,
     PassportModule.register({defaultStrategy: StrategyTypes.JWT}),
     JwtModule.registerAsync({
-      imports: [ConfigModule],
+      imports: [SharedConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
           secret: configService.get('JWT_SECRET'),

@@ -52,7 +52,8 @@
       "@blog/shared/ui/title-row": ["libs/shared/ui/title-row/src/index.ts"],
       "@blog/shared/users/data-access": [
         "libs/shared/users/data-access/src/index.ts"
-      ]
+      ],
+      "@blog/shared/config": ["libs/shared/config/src/index.ts"]
     }
   },
   "angularCompilerOptions": {

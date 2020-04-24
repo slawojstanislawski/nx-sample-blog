@@ -1,16 +1,26 @@
 import {MongooseModule} from '@nestjs/mongoose';
 import {Module} from '@nestjs/common';
 
+import {ConfigService, SharedConfigModule} from '@blog/shared/config';
+import {userSchemaFactory} from '@blog/shared/users/data-access';
+import {UserController} from './controllers/user.controller';
 import {UsersApiService} from './services/users-api.service';
-import {ConfigModule} from '../config/config.module';
-import {UserSchema} from './schemas/user.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{name: 'User', schema: UserSchema}]),
-    ConfigModule
+    MongooseModule.forFeatureAsync([
+      {
+        name: 'User',
+        imports: [SharedConfigModule],
+        useFactory: (configService: ConfigService) => {
+          return userSchemaFactory(configService);
+        },
+        inject: [ConfigService]
+      }
+    ])
   ],
   providers: [UsersApiService],
+  controllers: [UserController],
   exports: [UsersApiService]
 })
 export class UsersModule {}

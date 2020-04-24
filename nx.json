@@ -14,6 +14,12 @@
     "api": {
       "tags": ["app"]
     },
+    "seed": {
+      "tags": ["app"]
+    },
+    "api-interfaces": {
+      "tags": ["app"]
+    },
     "blog": {
       "tags": ["app"]
     },
@@ -65,13 +71,16 @@
     },
     "shared-users-data-access": {
       "tags": ["scope:shared", "type:data-access"]
+    },
+    "shared-config": {
+      "tags": ["type:shared"]
     }
   },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": ["lint", "test", "e2e"]
       }
     }
   }

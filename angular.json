@@ -182,6 +182,57 @@
         }
       }
     },
+    "seed": {
+      "root": "apps/seed",
+      "sourceRoot": "apps/seed/src",
+      "projectType": "application",
+      "prefix": "seed",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/seed",
+            "main": "apps/seed/src/main.ts",
+            "tsConfig": "apps/seed/tsconfig.app.json",
+            "assets": [],
+            "buildLibsFromSource": true
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": []
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "seed:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/seed/tsconfig.app.json",
+              "apps/seed/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/seed/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/seed/jest.config.js",
+            "tsConfig": "apps/seed/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "api-interfaces": {
       "root": "libs/api-interfaces",
       "sourceRoot": "libs/api-interfaces/src",
@@ -695,6 +746,38 @@
       "schematics": {
         "@nrwl/angular:component": {
           "styleext": "scss"
+        }
+      }
+    },
+    "shared-config": {
+      "projectType": "library",
+      "root": "libs/shared/config",
+      "sourceRoot": "libs/shared/config/src",
+      "prefix": "blog",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared/config/tsconfig.lib.json",
+              "libs/shared/config/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/shared/config/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/config/jest.config.js",
+            "tsConfig": "libs/shared/config/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/shared/config/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
         }
       }
     }
