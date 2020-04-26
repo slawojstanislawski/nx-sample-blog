@@ -1,4 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+$greenGradient: linear-gradient(140deg, #200011, #529780);
+$redGradient: linear-gradient(3deg, #33001b, #ff0084);
 
 html {
   font-size: 14px;
@@ -8,6 +9,8 @@ html,
 body {
   height: 100%;
   background: url('apps/blog/src/assets/images/cw.jpg') no-repeat fixed 0 56px;
+  background-size: cover;
+  word-break: break-word;
 }
 
 body {
@@ -22,3 +25,39 @@ body {
 .m-left-auto {
   margin-left: auto;
 }
+
+button, a {
+  &.mat-primary {
+    background: $greenGradient;
+  }
+}
+
+
+mat-sidenav {
+  background: $greenGradient;
+}
+
+.mat-toolbar {
+  &.mat-primary {
+    background: $redGradient;
+    border-bottom: 1px solid #5a0606;
+  }
+
+  mat-icon {
+    cursor: pointer;
+  }
+}
+
+mat-sidenav {
+  .mat-list-base {
+    .mat-list-item {
+      color: white;
+
+      &:hover {
+        background: rgba(199, 199, 199, 0.2);
+      }
+    }
+  }
+}
+
+
